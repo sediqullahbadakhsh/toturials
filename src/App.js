@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Overview from "./components/Overview";
+import "./App.css";
+import AddToList from "./components/AddToList";
+import { v4 as uuidv4 } from "uuid";
 
-function App() {
+const App = () => {
+  const [items, setItems] = useState([]);
+
+  const deleteItem = (id) => {
+    setItems([...items.filter((item) => item.id !== id)]);
+  };
+
+  const setUpdate = (updateName, id) => {
+    setItems(
+      items.map((item) => {
+        if (item.id === id) {
+          item.name = updateName;
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleToggle = (id) => {
+    setItems((prevState) =>
+      prevState.map((item) => {
+        if (item.id === id) {
+          return { ...item, completed: !item.completed };
+        }
+        return item;
+      })
+    );
+    console.log(id);
+  };
+
+  const addTask = (name) => {
+    const newItem = {
+      id: uuidv4(),
+      name,
+      completed: false,
+    };
+    setItems([...items, newItem]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-container">
+      <AddToList items={items} addTask={addTask} />
+      <Overview
+        items={items}
+        onClick={deleteItem}
+        setUpdate={setUpdate}
+        handleToggle={handleToggle}
+      />
     </div>
   );
-}
+};
 
 export default App;
