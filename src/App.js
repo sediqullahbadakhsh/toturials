@@ -31,7 +31,7 @@ const App = () => {
         return item;
       })
     );
-    console.log(id);
+    
   };
 
   const addTask = (name) => {

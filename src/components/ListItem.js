@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaEdit, FaTrashAlt, FaSave } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const ListItem = ({
   name,
